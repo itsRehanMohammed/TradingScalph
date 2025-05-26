@@ -54,13 +54,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-white/80 backdrop-blur-xl border-b border-gray-200/20 shadow-lg shadow-black/5"
-            : "bg-white/95 backdrop-blur-md"
-        }`}
-      >
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white/80 backdrop-blur-xl border-b border-gray-200/20 shadow-lg shadow-black/5" : "bg-white/95 backdrop-blur-md"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 lg:h-20">
             {/* Logo */}
@@ -72,12 +66,8 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="ml-3">
-                <span className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">
-                  Trading Scalph
-                </span>
-                <div className="text-xs text-gray-500 font-medium tracking-wide hidden lg:block">
-                  Professional Trading
-                </div>
+                <span className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">Capital Grow</span>
+                <div className="text-xs text-gray-500 font-medium tracking-wide hidden lg:block">Professional Trading</div>
               </div>
             </Link>
 
@@ -88,15 +78,11 @@ const Navbar = () => {
                   <Link
                     to={item.href}
                     className={`flex items-center px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
-                      isActive(item.href)
-                        ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 shadow-sm"
-                        : "text-gray-700 hover:text-blue-700 hover:bg-gray-50/80"
+                      isActive(item.href) ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 shadow-sm" : "text-gray-700 hover:text-blue-700 hover:bg-gray-50/80"
                     } group-hover:transform group-hover:scale-105`}
                   >
                     {item.name}
-                    {item.hasDropdown && (
-                      <ChevronDown className="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" />
-                    )}
+                    {item.hasDropdown && <ChevronDown className="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" />}
                   </Link>
 
                   {/* Packages Dropdown */}
@@ -107,11 +93,7 @@ const Navbar = () => {
                           <Link
                             key={dropdownItem.name}
                             to={dropdownItem.href}
-                            className={`block px-4 py-3 text-sm rounded-xl transition-colors ${
-                              isPackageDropdownActive(dropdownItem.href)
-                                ? "bg-blue-50 text-blue-700 font-medium"
-                                : "text-gray-700 hover:bg-blue-50 hover:text-blue-700"
-                            }`}
+                            className={`block px-4 py-3 text-sm rounded-xl transition-colors ${isPackageDropdownActive(dropdownItem.href) ? "bg-blue-50 text-blue-700 font-medium" : "text-gray-700 hover:bg-blue-50 hover:text-blue-700"}`}
                           >
                             {dropdownItem.name}
                           </Link>
@@ -124,36 +106,17 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden relative p-2 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all duration-200"
-            >
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="lg:hidden relative p-2 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all duration-200">
               <div className="relative w-6 h-6">
-                <Menu
-                  className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${
-                    isMenuOpen ? "opacity-0 rotate-180" : "opacity-100 rotate-0"
-                  }`}
-                />
-                <X
-                  className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${
-                    isMenuOpen
-                      ? "opacity-100 rotate-0"
-                      : "opacity-0 -rotate-180"
-                  }`}
-                />
+                <Menu className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${isMenuOpen ? "opacity-0 rotate-180" : "opacity-100 rotate-0"}`} />
+                <X className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${isMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-180"}`} />
               </div>
             </button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
-        <div
-          className={`lg:hidden transition-all duration-300 ease-in-out ${
-            isMenuOpen
-              ? "max-h-screen opacity-100"
-              : "max-h-0 opacity-0 overflow-hidden"
-          }`}
-        >
+        <div className={`lg:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0 overflow-hidden"}`}>
           <div className="bg-white/95 backdrop-blur-xl border-t border-gray-200/20 m-4 rounded-2xl shadow-xl">
             <div className="p-6 space-y-4">
               {navItems.map((item, index) => (
@@ -161,16 +124,12 @@ const Navbar = () => {
                   <Link
                     to={item.href}
                     className={`flex items-center justify-between w-full px-4 py-3 rounded-xl text-left font-medium transition-all duration-200 ${
-                      isActive(item.href)
-                        ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700"
-                        : "text-gray-700 hover:text-blue-700 hover:bg-gray-50"
+                      isActive(item.href) ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700" : "text-gray-700 hover:text-blue-700 hover:bg-gray-50"
                     } transform hover:scale-105`}
                     onClick={() => !item.hasDropdown && setIsMenuOpen(false)}
                   >
                     <span>{item.name}</span>
-                    {item.hasDropdown && (
-                      <ChevronDown className="w-4 h-4 text-gray-400" />
-                    )}
+                    {item.hasDropdown && <ChevronDown className="w-4 h-4 text-gray-400" />}
                   </Link>
 
                   {/* Mobile Packages Dropdown */}
@@ -180,11 +139,7 @@ const Navbar = () => {
                         <Link
                           key={dropdownItem.name}
                           to={dropdownItem.href}
-                          className={`block px-4 py-2 text-sm rounded-lg transition-colors ${
-                            isPackageDropdownActive(dropdownItem.href)
-                              ? "bg-blue-50 text-blue-600 font-medium"
-                              : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
-                          }`}
+                          className={`block px-4 py-2 text-sm rounded-lg transition-colors ${isPackageDropdownActive(dropdownItem.href) ? "bg-blue-50 text-blue-600 font-medium" : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"}`}
                           onClick={() => setIsMenuOpen(false)}
                         >
                           {dropdownItem.name}
