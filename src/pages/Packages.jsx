@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { CheckCircle, Star, TrendingUp, Shield, Zap } from "lucide-react";
 import packages from "../data/PackagesData";
+import { handlechat } from "../components/Helpers/Helpers";
+import { Link, useSearchParams } from "react-router-dom";
 
 const Packages = () => {
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategory = searchParams.get("category") || "all";
 
   const categories = [
     { id: "all", name: "All Packages", icon: TrendingUp },
@@ -30,29 +33,58 @@ const Packages = () => {
     },
   };
 
-  const filteredPackages = selectedCategory === "all" ? packages : packages.filter((pkg) => pkg.category === selectedCategory);
+  const handleCategoryChange = (categoryId) => {
+    if (categoryId === "all") {
+      // Remove the category param for "all"
+      searchParams.delete("category");
+      setSearchParams(searchParams);
+    } else {
+      // Set the category param
+      setSearchParams({ category: categoryId });
+    }
+  };
+
+  const filteredPackages =
+    selectedCategory === "all"
+      ? packages
+      : packages.filter((pkg) => pkg.category === selectedCategory);
 
   const groupedPackages =
     selectedCategory === "all"
       ? {
-          "index-option": packages.filter((pkg) => pkg.category === "index-option"),
-          "index-option-plus": packages.filter((pkg) => pkg.category === "index-option-plus"),
-          "index-option-combo": packages.filter((pkg) => pkg.category === "index-option-combo"),
+          "index-option": packages.filter(
+            (pkg) => pkg.category === "index-option"
+          ),
+          "index-option-plus": packages.filter(
+            (pkg) => pkg.category === "index-option-plus"
+          ),
+          "index-option-combo": packages.filter(
+            (pkg) => pkg.category === "index-option-combo"
+          ),
         }
       : null;
 
   const handleConsultant = () => {
     const phoneNumber = "919004073766";
-    const message = encodeURIComponent("Hello, I need Consultant.");
+    const message = encodeURIComponent("Hello, I need Consultation.");
     const url = `https://wa.me/${phoneNumber}?text=${message}`;
-    window.open(url, "_blank");
+    window.open(url, "_self");
   };
 
+  const handleGetStarted = (pkg) => {
+    handlechat(`Hi, I'm interested in the ${pkg.name} package.`);
+  };
   const PackageCard = ({ pkg }) => (
-    <div className={`relative bg-white rounded-lg border border-gray-200 p-6 hover:border-gray-300 transition-all duration-200 ${pkg.popular ? "ring-2 ring-slate-900" : ""}`}>
+    <div
+      className={`relative bg-white rounded-lg border border-gray-800 p-6 hover:border-gray-900 transition-all duration-200 ${
+        pkg.popular ? "ring-2 ring-blue-500" : ""
+      }`}
+    >
       {pkg.popular && (
         <div className="absolute -top-3 left-6">
-          <span className="bg-slate-900 text-white px-3 py-1 rounded-full text-sm font-medium">Most Popular</span>
+          <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            Most Popular
+          </span>
         </div>
       )}
 
@@ -67,13 +99,28 @@ const Packages = () => {
 
         <div className="mb-6">
           <div className="flex items-baseline">
-            <span className="text-2xl font-bold text-gray-900">{pkg.price}</span>
-            <span className="text-gray-500 ml-1">/{pkg.duration.toLowerCase()}</span>
+            <span className="text-2xl font-bold text-gray-900">
+              {pkg.price}
+            </span>
+            <span className="text-gray-500 ml-1">
+              /{pkg.duration.toLowerCase()}
+            </span>
           </div>
           {pkg.originalPrice && (
             <div className="flex items-center mt-1">
-              <span className="text-sm text-gray-400 line-through mr-2">{pkg.originalPrice}</span>
-              <span className="text-xs text-green-700 bg-green-50 px-2 py-1 rounded font-medium">Save {Math.round((1 - parseInt(pkg.price.replace(/[^\d]/g, "")) / parseInt(pkg.originalPrice.replace(/[^\d]/g, ""))) * 100)}%</span>
+              <span className="text-sm text-gray-400 line-through mr-2">
+                {pkg.originalPrice}
+              </span>
+              <span className="text-xs text-green-700 bg-green-50 px-2 py-1 rounded font-medium">
+                Save{" "}
+                {Math.round(
+                  (1 -
+                    parseInt(pkg.price.replace(/[^\d]/g, "")) /
+                      parseInt(pkg.originalPrice.replace(/[^\d]/g, ""))) *
+                    100
+                )}
+                %
+              </span>
             </div>
           )}
         </div>
@@ -88,9 +135,20 @@ const Packages = () => {
         ))}
       </div>
 
-      <button className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${pkg.popular ? "bg-slate-900 text-white hover:bg-slate-800" : "border border-gray-300 text-gray-700 hover:bg-gray-50"}`}>Get Started</button>
+      <button
+        className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${
+          pkg.popular
+            ? "bg-blue-500 text-white hover:bg-blue-600"
+            : "bg-slate-900 text-gray-100 hover:bg-slate-800"
+        }`}
+        onClick={() => handleGetStarted(pkg)}
+      >
+        Get Started
+      </button>
 
-      <p className="text-xs text-gray-500 mt-3 text-center">*Prices inclusive of GST</p>
+      <p className="text-xs text-gray-500 mt-3 text-center">
+        *Prices inclusive of GST
+      </p>
     </div>
   );
 
@@ -99,8 +157,13 @@ const Packages = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Trading Packages</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">Choose the right package for your trading journey. All plans include expert analysis and live support.</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            Our Packages
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Choose the right package for your trading journey. All plans include
+            expert analysis and live support.
+          </p>
         </div>
 
         {/* Category Filter */}
@@ -110,9 +173,11 @@ const Packages = () => {
             return (
               <button
                 key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
+                onClick={() => handleCategoryChange(category.id)}
                 className={`cursor-pointer flex items-center px-3 md:px-6 py-2 rounded-md md:rounded-full font-semibold transition-all duration-300 ${
-                  selectedCategory === category.id ? "bg-blue-600 text-white shadow-lg transform scale-105" : "bg-white text-gray-700 hover:bg-gray-100 shadow-md"
+                  selectedCategory === category.id
+                    ? "bg-blue-600 text-white shadow-lg transform scale-105"
+                    : "bg-white text-gray-700 hover:bg-gray-100 shadow-md"
                 }`}
               >
                 <IconComponent className="w-4 h-4 md:w-5 md:h-5 mr-2" />
@@ -125,28 +190,34 @@ const Packages = () => {
         {/* Packages Display */}
         {selectedCategory === "all" ? (
           <div className="space-y-16">
-            {Object.entries(groupedPackages).map(([categoryKey, categoryPackages]) => {
-              const categoryData = categoryInfo[categoryKey];
-              const IconComponent = categoryData.icon;
+            {Object.entries(groupedPackages).map(
+              ([categoryKey, categoryPackages]) => {
+                const categoryData = categoryInfo[categoryKey];
+                const IconComponent = categoryData.icon;
 
-              return (
-                <div key={categoryKey} className="space-y-8 mt-10">
-                  <div className="text-center">
-                    <div className="flex items-center justify-center mb-3">
-                      <IconComponent className="w-6 h-6 mr-2 text-gray-700" />
-                      <h2 className="text-2xl font-bold text-gray-900">{categoryData.name}</h2>
+                return (
+                  <div key={categoryKey} className="space-y-8 mt-10">
+                    <div className="text-center">
+                      <div className="flex items-center justify-center mb-3">
+                        <IconComponent className="w-6 h-6 mr-2 text-gray-700" />
+                        <h2 className="text-2xl font-bold text-gray-900">
+                          {categoryData.name}
+                        </h2>
+                      </div>
+                      <p className="text-gray-600 max-w-xl mx-auto">
+                        {categoryData.description}
+                      </p>
                     </div>
-                    <p className="text-gray-600 max-w-xl mx-auto">{categoryData.description}</p>
-                  </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {categoryPackages.map((pkg) => (
-                      <PackageCard key={pkg.id} pkg={pkg} />
-                    ))}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                      {categoryPackages.map((pkg) => (
+                        <PackageCard key={pkg.id} pkg={pkg} />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              }
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -158,13 +229,26 @@ const Packages = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16 bg-gray-100 rounded-lg p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">Need Help Choosing the Right Package?</h2>
-          <p className="text-lg mb-6 opacity-90">Our experts are here to help you select the perfect trading package based on your goals and experience level.</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">
+            Need Help Choosing the Right Package?
+          </h2>
+          <p className="text-lg mb-6 opacity-90">
+            Our experts are here to help you select the perfect trading package
+            based on your goals and experience level.
+          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button onClick={handleConsultant} className="bg-slate-900 text-white px-6 py-3 rounded-md font-medium hover:bg-slate-800 transition-colors">
+            <button
+              onClick={handleConsultant}
+              className="bg-gray-100  text-gray-900 border px-6 py-3 cursor-pointer rounded-md font-medium hover:bg-gray-200 transition-colors"
+            >
               Schedule a Consultation
             </button>
-            <button className="border border-gray-300 text-gray-700 px-6 py-3 rounded-md font-medium hover:bg-gray-50 transition-colors">Contact Support</button>
+            <Link
+              to="/contact"
+              className="bg-slate-900 text-gray-100 px-6 py-3 cursor-pointer rounded-md font-medium hover:bg-slate-800 transition-colors"
+            >
+              Contact Support
+            </Link>
           </div>
         </div>
 
@@ -173,8 +257,14 @@ const Packages = () => {
           <div className="flex">
             <Shield className="h-5 w-5 text-amber-600 mt-0.5 mr-3 flex-shrink-0" />
             <div>
-              <h3 className="font-medium text-amber-900 mb-1">Risk Disclosure</h3>
-              <p className="text-sm text-amber-800">Trading involves high risk and may result in significant losses. Please understand the risks and trade responsibly. Past performance does not guarantee future results.</p>
+              <h3 className="font-medium text-amber-900 mb-1">
+                Risk Disclosure
+              </h3>
+              <p className="text-sm text-amber-800">
+                Trading involves high risk and may result in significant losses.
+                Please understand the risks and trade responsibly. Past
+                performance does not guarantee future results.
+              </p>
             </div>
           </div>
         </div>

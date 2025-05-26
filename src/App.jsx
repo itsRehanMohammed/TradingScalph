@@ -6,7 +6,7 @@ import ScrollToTop from "./ScrollToTop";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Packages from "./pages/Packages";
-// import Pricing from "./pages/Pricing";
+import About from "./pages/About";
 
 // const Home = lazy(() => import("./pages/Home"));
 // const Services = lazy(() => import("./pages/Services"));
@@ -21,8 +21,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/packages" element={<Packages />} />
+        <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        {/* <Route path="/pricing" element={<Pricing />} /> */}
       </Routes>
       <Footer />
     </Router>
