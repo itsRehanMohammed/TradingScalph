@@ -6,17 +6,15 @@ export function convertToKebabCase(str) {
 }
 
 export const handlechat = (msg) => {
-  const phoneNumber = "919004073766"; // Your WhatsApp business number
+  const phoneNumber = "919702439196"; // Your WhatsApp business number
   const message = encodeURIComponent(msg);
   const url = `https://wa.me/${phoneNumber}?text=${message}`;
   window.open(url, "_self");
 };
 
 export const handleStartTrading = () => {
-  const phoneNumber = "919004073766";
-  const message = encodeURIComponent(
-    "Hello, I would like to inquire about your services."
-  );
+  const phoneNumber = "919702439196";
+  const message = encodeURIComponent("Hello, I would like to inquire about your services.");
   const url = `https://wa.me/${phoneNumber}?text=${message}`;
   window.open(url, "_self");
 };

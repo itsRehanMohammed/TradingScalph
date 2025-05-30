@@ -60,14 +60,7 @@ const Navbar = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center group cursor-pointer">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-xl transform group-hover:scale-105 transition-transform duration-200">
-                  <TrendingUp className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
-                </div>
-              </div>
-              <div className="ml-3">
-                <span className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">Capital Grow</span>
-                <div className="text-xs text-gray-500 font-medium tracking-wide hidden lg:block">Professional Trading</div>
+                <img src="./capitalgrow.png" className="w-32 " />
               </div>
             </Link>
 

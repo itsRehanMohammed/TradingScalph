@@ -10,13 +10,7 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2 space-y-6">
             <div className="flex items-center">
               <Link to="/" className="flex items-center group cursor-pointer">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-white to-purple-600 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                  <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-xl transform group-hover:scale-105 transition-transform duration-200">
-                    <TrendingUp className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
-                  </div>
-                </div>
-                <div className="ml-3">
+                <div className="">
                   <span className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-gray-100 via-blue-500 to-purple-500 bg-clip-text text-transparent">Capital Grow</span>
                   <div className="text-xs text-gray-200 font-medium tracking-wide hidden lg:block">Professional Trading</div>
                 </div>
@@ -26,22 +20,22 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors">
                 <p className="text-xs text-gray-400">Phone</p>
-                <a href="tel:919004073766" className="text-white hover:text-blue-300 font-medium text-sm">
-                  +91 90040 73766
+                <a href="tel:919702439196" className="text-white hover:text-blue-300 font-medium text-sm">
+                  +91 97024 39196
                 </a>
               </div>
 
               <div className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors">
                 <p className="text-xs text-gray-400">Email</p>
-                <a href="mailto:tradingscalph@gmail.com" className="text-white hover:text-blue-300 font-medium text-sm">
-                  tradingscalph@gmail.com
+                <a href="mailto:capitalgrowcomplai@gmail.com" className="text-white hover:text-blue-300 font-medium text-sm">
+                  capitalgrowcomplai@gmail.com
                 </a>
               </div>
 
               <div className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors">
                 <p className="text-xs text-gray-400">Address</p>
-                <p className="text-white font-medium text-sm">Satara Plaza, Vashi</p>
-                <p className="text-white text-sm">Navi Mumbai - 400089</p>
+                <p className="text-white font-medium text-sm">Vashi , Infotech</p>
+                <p className="text-white text-sm">Navi Mumbai - 400703</p>
               </div>
             </div>
           </div>
