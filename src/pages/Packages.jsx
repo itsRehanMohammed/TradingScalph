@@ -44,7 +44,7 @@ const Packages = () => {
     }
   };
 
-  const filteredPackages = selectedCategory === "all" ? packages : packages.filter((pkg) => pkg.category === selectedCategory);
+  const filteredPackages = selectedCategory === "all" ? packages : packages.filter((pkg) => pkg.category.includes(selectedCategory) || pkg.category === selectedCategory);
 
   const groupedPackages =
     selectedCategory === "all"
@@ -68,15 +68,15 @@ const Packages = () => {
   const PackageCard = ({ pkg }) => (
     <div
       className={`relative rounded-lg border p-6 transition-all duration-200 ${
-        pkg.category === "index-option-combo" ? "bg-orange-50 border-orange-300 ring-2 ring-orange-400 shadow-lg" : `bg-white border-gray-800 hover:border-gray-900 ${pkg.popular ? "ring-2 ring-blue-500" : ""}`
+        pkg.category === "index-option-combo-premium" ? "bg-orange-50 border-orange-300 ring-2 ring-orange-400 shadow-lg" : `bg-white border-gray-800 hover:border-gray-900 ${pkg.popular ? "ring-2 ring-blue-500" : ""}`
       }`}
     >
-      {pkg.category === "index-option-combo" && (
+      {pkg.category === "index-option-combo-premium" && (
         <div className="absolute -top-3 left-6">
           <span className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md">🔥 Limited Time Offer</span>
         </div>
       )}
-      {pkg.popular && pkg.category !== "index-option-combo" && (
+      {pkg.popular && pkg.category !== "index-option-combo-premium" && (
         <div className="absolute -top-3 left-6">
           <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">Most Popular</span>
         </div>
@@ -91,7 +91,7 @@ const Packages = () => {
         <h3 className="text-lg font-semibold text-gray-900 mb-2">{pkg.name}</h3>
         <p className="text-gray-600 text-sm mb-4">{pkg.description}</p>
 
-        {pkg.category === "index-option-combo" && (
+        {pkg.category === "index-option-combo-premium" && (
           <div className="bg-orange-100 border border-orange-300 rounded-md p-3 mb-4">
             <p className="text-xs font-semibold text-orange-900 mb-1">💼 Exclusively for High Net Worth Investors</p>
             {/* <p className="text-xs text-orange-800">Designed for serious traders and institutional investors seeking comprehensive coverage with advanced AI-powered insights and premium support.</p> */}
@@ -123,11 +123,11 @@ const Packages = () => {
 
       <button
         className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${
-          pkg.category === "index-option-combo" ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 shadow-md" : pkg.popular ? "bg-blue-500 text-white hover:bg-blue-600" : "bg-slate-900 text-gray-100 hover:bg-slate-800"
+          pkg.category === "index-option-combo-premium" ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 shadow-md" : pkg.popular ? "bg-blue-500 text-white hover:bg-blue-600" : "bg-slate-900 text-gray-100 hover:bg-slate-800"
         }`}
         onClick={() => handleGetStarted(pkg)}
       >
-        {pkg.category === "index-option-combo" ? "Claim Exclusive Offer" : "Get Started"}
+        {pkg.category === "index-option-combo-premium" ? "Claim Exclusive Offer" : "Get Started"}
       </button>
 
       <p className="text-xs text-gray-500 mt-3 text-center">*Prices inclusive of GST</p>
