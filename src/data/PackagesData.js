@@ -136,7 +136,7 @@ const packages = [
   },
   {
     id: 12,
-    category: "premium-option-combo",
+    category: "index-option-combo",
     name: "Premium Option Combo - Professional",
     duration: "Yearly",
     price: "₹14,15,000",
