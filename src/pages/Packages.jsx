@@ -66,8 +66,17 @@ const Packages = () => {
     handlechat(`Hi, I'm interested in the ${pkg.name} package.`);
   };
   const PackageCard = ({ pkg }) => (
-    <div className={`relative bg-white rounded-lg border border-gray-800 p-6 hover:border-gray-900 transition-all duration-200 ${pkg.popular ? "ring-2 ring-blue-500" : ""}`}>
-      {pkg.popular && (
+    <div
+      className={`relative rounded-lg border p-6 transition-all duration-200 ${
+        pkg.category === "premium-option-combo" ? "bg-orange-50 border-orange-300 ring-2 ring-orange-400 shadow-lg" : `bg-white border-gray-800 hover:border-gray-900 ${pkg.popular ? "ring-2 ring-blue-500" : ""}`
+      }`}
+    >
+      {pkg.category === "premium-option-combo" && (
+        <div className="absolute -top-3 left-6">
+          <span className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md">🔥 Limited Time Offer</span>
+        </div>
+      )}
+      {pkg.popular && pkg.category !== "premium-option-combo" && (
         <div className="absolute -top-3 left-6">
           <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">Most Popular</span>
         </div>
@@ -81,6 +90,13 @@ const Packages = () => {
 
         <h3 className="text-lg font-semibold text-gray-900 mb-2">{pkg.name}</h3>
         <p className="text-gray-600 text-sm mb-4">{pkg.description}</p>
+
+        {pkg.category === "premium-option-combo" && (
+          <div className="bg-orange-100 border border-orange-300 rounded-md p-3 mb-4">
+            <p className="text-xs font-semibold text-orange-900 mb-1">💼 Exclusively for High Net Worth Investors</p>
+            {/* <p className="text-xs text-orange-800">Designed for serious traders and institutional investors seeking comprehensive coverage with advanced AI-powered insights and premium support.</p> */}
+          </div>
+        )}
 
         <div className="mb-6">
           <div className="flex items-baseline">
@@ -105,8 +121,13 @@ const Packages = () => {
         ))}
       </div>
 
-      <button className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${pkg.popular ? "bg-blue-500 text-white hover:bg-blue-600" : "bg-slate-900 text-gray-100 hover:bg-slate-800"}`} onClick={() => handleGetStarted(pkg)}>
-        Get Started
+      <button
+        className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${
+          pkg.category === "premium-option-combo" ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 shadow-md" : pkg.popular ? "bg-blue-500 text-white hover:bg-blue-600" : "bg-slate-900 text-gray-100 hover:bg-slate-800"
+        }`}
+        onClick={() => handleGetStarted(pkg)}
+      >
+        {pkg.category === "premium-option-combo" ? "Claim Exclusive Offer" : "Get Started"}
       </button>
 
       <p className="text-xs text-gray-500 mt-3 text-center">*Prices inclusive of GST</p>
@@ -142,51 +163,10 @@ const Packages = () => {
         </div>
 
         {/* Packages Display */}
-        {selectedCategory === "all" ? (
-          <div className="space-y-16">
-            {Object.entries(groupedPackages).map(([categoryKey, categoryPackages]) => {
-              const categoryData = categoryInfo[categoryKey];
-              const IconComponent = categoryData.icon;
-
-              return (
-                <div key={categoryKey} className="space-y-8 mt-10">
-                  <div className="text-center">
-                    <div className="flex items-center justify-center mb-3">
-                      <IconComponent className="w-6 h-6 mr-2 text-gray-700" />
-                      <h2 className="text-2xl font-bold text-gray-900">{categoryData.name}</h2>
-                    </div>
-                    <p className="text-gray-600 max-w-xl mx-auto">{categoryData.description}</p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {categoryPackages.map((pkg) => (
-                      <PackageCard key={pkg.id} pkg={pkg} />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {filteredPackages.map((pkg) => (
-              <PackageCard key={pkg.id} pkg={pkg} />
-            ))}
-          </div>
-        )}
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-16 bg-gray-100 rounded-lg p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">Need Help Choosing the Right Package?</h2>
-          <p className="text-lg mb-6 opacity-90">Our experts are here to help you select the perfect trading package based on your goals and experience level.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button onClick={handleConsultant} className="bg-gray-100  text-gray-900 border px-6 py-3 cursor-pointer rounded-md font-medium hover:bg-gray-200 transition-colors">
-              Schedule a Consultation
-            </button>
-            <Link to="/contact" className="bg-slate-900 text-gray-100 px-6 py-3 cursor-pointer rounded-md font-medium hover:bg-slate-800 transition-colors">
-              Contact Support
-            </Link>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredPackages.map((pkg) => (
+            <PackageCard key={pkg.id} pkg={pkg} />
+          ))}
         </div>
 
         {/* Risk Disclaimer */}
