@@ -4,6 +4,85 @@ import packages from "../data/PackagesData";
 import { handlechat } from "../components/Helpers/Helpers";
 import { Link, useSearchParams } from "react-router-dom";
 
+const handleConsultant = () => {
+  const phoneNumber = "919702439196";
+  const message = encodeURIComponent("Hello, I need Consultation.");
+  const url = `https://wa.me/${phoneNumber}?text=${message}`;
+  window.open(url, "_self");
+};
+
+const handleGetStarted = (pkg) => {
+  handlechat(`Hi, I'm interested in the ${pkg.name} package.`);
+};
+export const PackageCard = ({ pkg }) => (
+  <div
+    className={`relative rounded-lg border p-6 transition-all duration-200 ${
+      pkg.category === "index-option-combo-premium" ? "bg-green-50 border-green-300 ring-2 ring-green-400 shadow-lg" : `bg-white border-gray-800 hover:border-gray-900 ${pkg.popular ? "ring-2 ring-blue-500" : ""}`
+    }`}
+  >
+    {pkg.category === "index-option-combo-premium" && (
+      <div className="absolute -top-3 left-6">
+        <span className="bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md">⏳ Limited Time Offer</span>
+      </div>
+    )}
+    {pkg.popular && pkg.category !== "index-option-combo-premium" && (
+      <div className="absolute -top-3 left-6">
+        <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">Most Popular</span>
+      </div>
+    )}
+
+    <div className="mb-6">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-sm font-medium text-gray-600">{pkg.badge}</span>
+        <span className="text-sm text-gray-500">{pkg.duration}</span>
+      </div>
+
+      <h3 className="text-lg font-semibold text-gray-900 mb-2">{pkg.name}</h3>
+      <p className="text-gray-600 text-sm mb-4">{pkg.description}</p>
+
+      {pkg.category === "index-option-combo-premium" && (
+        <div className="bg-green-100 border border-green-300 rounded-md p-3 mb-4">
+          <p className="text-xs font-semibold text-green-900 mb-1">💼 Exclusively for High Net Worth Investors</p>
+          {/* <p className="text-xs text-green-800">Designed for serious traders and institutional investors seeking comprehensive coverage with advanced AI-powered insights and premium support.</p> */}
+        </div>
+      )}
+
+      <div className="mb-6">
+        <div className="flex items-baseline">
+          <span className="text-2xl font-bold text-gray-900">{pkg.price}</span>
+          <span className="text-gray-500 ml-1">/{pkg.duration.toLowerCase()}</span>
+        </div>
+        {pkg.originalPrice && (
+          <div className="flex items-center mt-1">
+            <span className="text-sm text-gray-400 line-through mr-2">{pkg.originalPrice}</span>
+            <span className="text-xs text-green-700 bg-green-50 px-2 py-1 rounded font-medium">Save {Math.round((1 - parseInt(pkg.price.replace(/[^\d]/g, "")) / parseInt(pkg.originalPrice.replace(/[^\d]/g, ""))) * 100)}%</span>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <div className="space-y-3 mb-6">
+      {pkg.features.map((feature, idx) => (
+        <div key={idx} className="flex items-start">
+          <CheckCircle className="w-4 h-4 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+          <span className="text-gray-700 text-sm">{feature}</span>
+        </div>
+      ))}
+    </div>
+
+    <button
+      className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${
+        pkg.category === "index-option-combo-premium" ? "bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-700 shadow-md" : pkg.popular ? "bg-blue-500 text-white hover:bg-blue-600" : "bg-slate-900 text-gray-100 hover:bg-slate-800"
+      }`}
+      onClick={() => handleGetStarted(pkg)}
+    >
+      {pkg.category === "index-option-combo-premium" ? "Claim Exclusive Offer" : "Get Started"}
+    </button>
+
+    <p className="text-xs text-gray-500 mt-3 text-center">*Prices inclusive of GST</p>
+  </div>
+);
+
 const Packages = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = searchParams.get("category") || "all";
@@ -55,84 +134,8 @@ const Packages = () => {
         }
       : null;
 
-  const handleConsultant = () => {
-    const phoneNumber = "919702439196";
-    const message = encodeURIComponent("Hello, I need Consultation.");
-    const url = `https://wa.me/${phoneNumber}?text=${message}`;
-    window.open(url, "_self");
-  };
 
-  const handleGetStarted = (pkg) => {
-    handlechat(`Hi, I'm interested in the ${pkg.name} package.`);
-  };
-  const PackageCard = ({ pkg }) => (
-    <div
-      className={`relative rounded-lg border p-6 transition-all duration-200 ${
-        pkg.category === "index-option-combo-premium" ? "bg-orange-50 border-orange-300 ring-2 ring-orange-400 shadow-lg" : `bg-white border-gray-800 hover:border-gray-900 ${pkg.popular ? "ring-2 ring-blue-500" : ""}`
-      }`}
-    >
-      {pkg.category === "index-option-combo-premium" && (
-        <div className="absolute -top-3 left-6">
-          <span className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md">🔥 Limited Time Offer</span>
-        </div>
-      )}
-      {pkg.popular && pkg.category !== "index-option-combo-premium" && (
-        <div className="absolute -top-3 left-6">
-          <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">Most Popular</span>
-        </div>
-      )}
 
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-medium text-gray-600">{pkg.badge}</span>
-          <span className="text-sm text-gray-500">{pkg.duration}</span>
-        </div>
-
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">{pkg.name}</h3>
-        <p className="text-gray-600 text-sm mb-4">{pkg.description}</p>
-
-        {pkg.category === "index-option-combo-premium" && (
-          <div className="bg-orange-100 border border-orange-300 rounded-md p-3 mb-4">
-            <p className="text-xs font-semibold text-orange-900 mb-1">💼 Exclusively for High Net Worth Investors</p>
-            {/* <p className="text-xs text-orange-800">Designed for serious traders and institutional investors seeking comprehensive coverage with advanced AI-powered insights and premium support.</p> */}
-          </div>
-        )}
-
-        <div className="mb-6">
-          <div className="flex items-baseline">
-            <span className="text-2xl font-bold text-gray-900">{pkg.price}</span>
-            <span className="text-gray-500 ml-1">/{pkg.duration.toLowerCase()}</span>
-          </div>
-          {pkg.originalPrice && (
-            <div className="flex items-center mt-1">
-              <span className="text-sm text-gray-400 line-through mr-2">{pkg.originalPrice}</span>
-              <span className="text-xs text-green-700 bg-green-50 px-2 py-1 rounded font-medium">Save {Math.round((1 - parseInt(pkg.price.replace(/[^\d]/g, "")) / parseInt(pkg.originalPrice.replace(/[^\d]/g, ""))) * 100)}%</span>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div className="space-y-3 mb-6">
-        {pkg.features.map((feature, idx) => (
-          <div key={idx} className="flex items-start">
-            <CheckCircle className="w-4 h-4 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
-            <span className="text-gray-700 text-sm">{feature}</span>
-          </div>
-        ))}
-      </div>
-
-      <button
-        className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${
-          pkg.category === "index-option-combo-premium" ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 shadow-md" : pkg.popular ? "bg-blue-500 text-white hover:bg-blue-600" : "bg-slate-900 text-gray-100 hover:bg-slate-800"
-        }`}
-        onClick={() => handleGetStarted(pkg)}
-      >
-        {pkg.category === "index-option-combo-premium" ? "Claim Exclusive Offer" : "Get Started"}
-      </button>
-
-      <p className="text-xs text-gray-500 mt-3 text-center">*Prices inclusive of GST</p>
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-white py-16">
@@ -168,6 +171,19 @@ const Packages = () => {
             <PackageCard key={pkg.id} pkg={pkg} />
           ))}
         </div>
+
+        <div className="text-center mt-16 bg-gray-100 rounded-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Need Help Choosing the Right Package?</h2>
+          <p className="text-lg mb-6 opacity-90">Our experts are here to help you select the perfect trading package based on your goals and experience level.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button onClick={handleConsultant} className="bg-gray-100  text-gray-900 border px-6 py-3 cursor-pointer rounded-md font-medium hover:bg-gray-200 transition-colors">
+              Schedule a Consultation
+            </button>
+            <Link to="/contact" className="bg-slate-900 text-gray-100 px-6 py-3 cursor-pointer rounded-md font-medium hover:bg-slate-800 transition-colors">
+              Contact Support
+            </Link>
+          </div>
+          </div>
 
         {/* Risk Disclaimer */}
         <div className="mt-12 bg-amber-50 border border-amber-200 rounded-lg p-4">
