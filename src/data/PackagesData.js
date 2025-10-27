@@ -139,7 +139,7 @@ const packages = [
     category: "index-option-combo-premium",
     name: "Premium Option Combo - Professional",
     duration: "Yearly",
-    price: "₹14,15,000",
+    price: "₹7,15,000",
     originalPrice: "₹22,20,000",
     description: "Ultimate annual combo package for professional traders",
     features: [
