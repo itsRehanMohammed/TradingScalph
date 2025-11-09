@@ -17,14 +17,14 @@ const handleGetStarted = (pkg) => {
 export const PackageCard = ({ pkg }) => (
   <div
     className={`relative rounded-lg border p-6 transition-all duration-200 ${
-      pkg.category === "index-option-combo-premium" ? "bg-green-50 border-green-300 ring-2 ring-green-400 shadow-lg" : `bg-white border-gray-800 hover:border-gray-900 ${pkg.popular ? "ring-2 ring-blue-500" : ""}`
+      pkg.category === "index-option-combo-premium" ? "mb-10 md:mb-0 bg-green-50 border-green-300 ring-2 ring-green-400 shadow-lg" : `bg-white border-gray-800 hover:border-gray-900 ${pkg.popular ? "ring-2 ring-blue-500" : ""}`
     }`}
   >
-    {pkg.category === "index-option-combo-premium" && (
+    {/* {pkg.category === "index-option-combo-premium" && (
       <div className="absolute -top-3 left-6">
         <span className="bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md">⏳ Limited Time Offer</span>
       </div>
-    )}
+    )} */}
     {pkg.popular && pkg.category !== "index-option-combo-premium" && (
       <div className="absolute -top-3 left-6">
         <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">Most Popular</span>
@@ -134,9 +134,6 @@ const Packages = () => {
         }
       : null;
 
-
-
-
   return (
     <div className="min-h-screen bg-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -183,7 +180,7 @@ const Packages = () => {
               Contact Support
             </Link>
           </div>
-          </div>
+        </div>
 
         {/* Risk Disclaimer */}
         <div className="mt-12 bg-amber-50 border border-amber-200 rounded-lg p-4">
